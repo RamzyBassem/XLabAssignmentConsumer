@@ -1,0 +1,81 @@
+<div *ngIf="errorMessage!=''" class="alert alert-danger w-50 mx-auto my-4 text-center">
+    {{errorMessage}}
+
+</div>
+<div *ngIf="successMessage!=''" class="alert alert-success w-50 mx-auto my-4 text-center">
+    {{successMessage}}
+
+</div>
+<form id="form"  >
+<div class="container  mt-5 w-50 mx-auto py-3 border border-2 p-3 rounded-3"dir="rtl" >
+    <div class=" row  p-3  my-2">
+        <div class="col-8">
+            <label >رقم الحركه</label>
+            <input type="text" [(ngModel)]="searchInvoiceNumber" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col">
+            <button class="btn btn-light mx-5" (click)="Search()" >Search</button>
+
+        </div>
+    </div>
+    <hr >
+    <div class="row">
+        <div class="col-6">
+            <label >رقم الحركه</label>
+            <input type="text" [(ngModel)]="this.invoice.invoiceNumber"[ngModelOptions]="{standalone: true}" > 
+            <br>
+            <label >أسم العميل</label>
+            <input type="text" [(ngModel)]="this.invoice.clientName" [ngModelOptions]="{standalone: true}">
+            <br>
+            <label >التاريخ</label>
+            <input type="date" [(ngModel)]="this.invoice.createdDate"  [ngModel]="this.invoice.createdDate | date: 'yyyy-MM-dd'" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col">
+            <button class="btn btn-info mx-2" type="reset" (click)="reset();
+            ">Clear Data</button>
+            <button class="btn btn-warning mx-2" (click)="update()">Update</button>
+        </div>
+
+
+        <div class="col">
+            <button class="btn btn-danger mx-2" (click)="delete()">Delete</button>
+            <button class="btn btn-primary mx-2" (click)="insert()" >Insert</button>
+       
+        </div>        
+    </div>
+    <table class="table table-bordered my-4">
+        <thead>
+          <tr>
+            <th scope="col">الصنف</th>
+            <th scope="col">السعر</th>
+            <th scope="col">الكمية</th>
+            <th scope="col">الاجمالي</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let i of [0,1,2,3]">
+            <td scope="row"><input type="text" [(ngModel)]="this.invoieDetails[i].productName" [ngModelOptions]="{standalone: true}"  (ngModelChange)="getproductsCount()"></td>
+            <td><input type="text" [(ngModel)]="this.invoieDetails[i].price" [ngModelOptions]="{standalone: true}" (ngModelChange)="getproductsCount()"></td>
+            <td><input type="text" [(ngModel)]="this.invoieDetails[i].quantity" [ngModelOptions]="{standalone: true}" (ngModelChange)="getproductsCount()"></td>
+            <td *ngIf="this.invoieDetails[i].price!=undefined">
+                <input type="text" disabled [value]="this.invoieDetails[i].price * this.invoieDetails[i].quantity">
+                </td>
+            <td *ngIf="this.invoieDetails[i].price==undefined"> <input type="text" disabled ></td>
+
+          </tr>
+          
+        </tbody>
+      </table>
+      <hr>
+      <div class=" row  p-3  my-2">
+        <div class="col-6">
+            <label >عددالاصناف</label>
+            <input type="text" disabled [(ngModel)]="detailsCounter" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="col-6">
+            <label >اجمالي الفاتورة</label>
+            <input type="text" disabled  [(ngModel)]="totalPrice" [ngModelOptions]="{standalone: true}"> 
+        </div>
+    </div>
+</div>
+</form>
